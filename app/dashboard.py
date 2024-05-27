@@ -53,38 +53,28 @@ class Dashboard(ctk.CTkFrame):
         selected_item = self.tree.selection()
         if selected_item:
             movie_title = self.tree.item(selected_item, 'values')[0]
-            try:
-                query = "SELECT id FROM movies WHERE title = %s"
-                result = fetch_query(query, (movie_title,))
-                if result:
-                    movie_id = result[0]['id']
-                    self.controller.show_frame("Movie", movie_id=movie_id, callback=self.load_movies)
-                else:
-                    messagebox.showerror("Error", "Movie ID not found")
-            except mysql.connector.Error as err:
-                messagebox.showerror("Error", f"Database error: {err}")
-                
-    def tkraise(self, *args, **kwargs):
-        super().tkraise(*args, **kwargs)
-        self.load_movies()
+            query = "SELECT id FROM movies WHERE title = %s"
+            result = fetch_query(query, (movie_title,))
+            if result:
+                movie_id = result[0]['id']
+                self.controller.show_frame("Movie", movie_id=movie_id, callback=self.load_movies)
+            else:
+                messagebox.showerror("Error", "Movie ID not found")
 
     def delete_movie(self):
         selected_item = self.tree.selection()
         if selected_item:
             movie_title = self.tree.item(selected_item, 'values')[0]
-            try:
-                query = "SELECT id FROM movies WHERE title = %s"
-                result = fetch_query(query, (movie_title,))
-                if result:
-                    movie_id = result[0]['id']
-                    delete_query = "DELETE FROM movies WHERE id = %s"
-                    execute_query(delete_query, (movie_id,))
-                    messagebox.showinfo("Success", "Movie deleted successfully")
-                    self.load_movies()
-                else:
-                    messagebox.showerror("Error", "Movie ID not found")
-            except mysql.connector.Error as err:
-                messagebox.showerror("Error", f"Database error: {err}")
+            query = "SELECT id FROM movies WHERE title = %s"
+            result = fetch_query(query, (movie_title,))
+            if result:
+                movie_id = result[0]['id']
+                delete_query = "DELETE FROM movies WHERE id = %s"
+                execute_query(delete_query, (movie_id,))
+                messagebox.showinfo("Success", "Movie deleted successfully")
+                self.load_movies()
+            else:
+                messagebox.showerror("Error", "Movie ID not found")
 
     def add_to_watchlist(self):
         self.controller.show_frame("Watchlist")

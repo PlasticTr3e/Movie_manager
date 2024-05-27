@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from tkinter import messagebox
 from database import fetch_query, execute_query
+import mysql.connector
 
 class Auth(ctk.CTkFrame):
     def __init__(self, parent, controller):
@@ -57,6 +58,9 @@ class Register(ctk.CTkFrame):
         self.entry_username = ctk.CTkEntry(self, placeholder_text="Username")
         self.entry_username.pack(pady=10)
 
+        self.entry_email = ctk.CTkEntry(self, placeholder_text="Email")
+        self.entry_email.pack(pady=10)
+
         self.entry_password = ctk.CTkEntry(self, placeholder_text="Password", show="*")
         self.entry_password.pack(pady=10)
 
@@ -71,10 +75,11 @@ class Register(ctk.CTkFrame):
 
     def register(self):
         username = self.entry_username.get()
+        email = self.entry_email.get()
         password = self.entry_password.get()
         confirm_password = self.entry_confirm_password.get()
 
-        if not username or not password or not confirm_password:
+        if not username or not email or not password or not confirm_password:
             messagebox.showerror("Error", "All fields are required")
             return
 
@@ -82,15 +87,15 @@ class Register(ctk.CTkFrame):
             messagebox.showerror("Error", "Passwords do not match")
             return
 
-        query = "SELECT * FROM users WHERE username = %s"
-        user = fetch_query(query, (username,))
+        query = "SELECT * FROM users WHERE username = %s OR email = %s"
+        user = fetch_query(query, (username, email))
         if user:
-            messagebox.showerror("Error", "Username already exists")
+            messagebox.showerror("Error", "Username or Email already exists")
             return
 
-        query = "INSERT INTO users (username, password) VALUES (%s, %s)"
+        query = "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)"
         try:
-            execute_query(query, (username, password))
+            execute_query(query, (username, email, password))
             messagebox.showinfo("Success", "User registered successfully")
             self.back_to_login()
         except mysql.connector.Error as err:
@@ -98,3 +103,4 @@ class Register(ctk.CTkFrame):
 
     def back_to_login(self):
         self.controller.show_frame("Auth")
+

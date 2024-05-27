@@ -30,6 +30,9 @@ class Movie(ctk.CTkFrame):
 
         self.button_save = ctk.CTkButton(self, text="Save Movie", command=self.save_movie)
         self.button_save.pack(pady=10)
+        
+        self.button_back = ctk.CTkButton(self, text="Back to Dashboard", command=self.back_to_dashboard)
+        self.button_back.pack(pady=5)
 
     def load_movie(self, movie_id=None, callback=None):
         self.movie_id = movie_id
@@ -38,15 +41,10 @@ class Movie(ctk.CTkFrame):
             query = "SELECT * FROM movies WHERE id = %s"
             movie = fetch_query(query, (movie_id,))
             if movie:
-                self.entry_title.delete(0, ctk.END)
                 self.entry_title.insert(0, movie[0]['title'])
-                self.entry_director.delete(0, ctk.END)
                 self.entry_director.insert(0, movie[0]['director'])
-                self.entry_year.delete(0, ctk.END)
                 self.entry_year.insert(0, movie[0]['release_year'])
-                self.entry_genre.delete(0, ctk.END)
                 self.entry_genre.insert(0, movie[0]['genre'])
-                self.text_description.delete("1.0", ctk.END)
                 self.text_description.insert("1.0", movie[0]['description'])
 
     def save_movie(self):
@@ -56,15 +54,23 @@ class Movie(ctk.CTkFrame):
         genre = self.entry_genre.get()
         description = self.text_description.get("1.0", ctk.END).strip()
 
-        if self.movie_id:
-            query = "UPDATE movies SET title = %s, director = %s, release_year = %s, genre = %s, description = %s WHERE id = %s"
-            execute_query(query, (title, director, year, genre, description, self.movie_id))
-        else:
-            query = "INSERT INTO movies (title, director, release_year, genre, description) VALUES (%s, %s, %s, %s, %s)"
-            execute_query(query, (title, director, year, genre, description))
+        if not title or not director or not year or not genre:
+            messagebox.showerror("Error", "All fields except description are required")
+            return
 
-        if self.callback:
-            self.callback()
+        try:
+            if self.movie_id:
+                query = "UPDATE movies SET title = %s, director = %s, release_year = %s, genre = %s, description = %s WHERE id = %s"
+                execute_query(query, (title, director, year, genre, description, self.movie_id))
+            else:
+                query = "INSERT INTO movies (title, director, release_year, genre, description) VALUES (%s, %s, %s, %s, %s)"
+                execute_query(query, (title, director, year, genre, description))
+            messagebox.showinfo("Success", "Movie saved successfully")
+            if self.callback:
+                self.callback()
+            self.controller.show_frame("Dashboard")
+        except Exception as err:
+            messagebox.showerror("Error", f"Database error: {err}")
+
+    def back_to_dashboard(self):
         self.controller.show_frame("Dashboard")
-    
-    
