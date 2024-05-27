@@ -7,15 +7,12 @@ myuser = "root"
 mypassword = "mysql"
 mydatabase = "movie_manager"
 
-
-csv_file = "modified_films_data.csv"
-
+csv_file = "movie_data_scrape/modified_films_data.csv"
 
 mydb = mysql.connector.connect(
     host=myhost, user=myuser, password=mypassword, database=mydatabase
 )
 mycursor = mydb.cursor()
-
 
 with open(csv_file, 'r', encoding='utf-8') as csvfile:
     csv_reader = csv.reader(csvfile)
@@ -26,11 +23,10 @@ with open(csv_file, 'r', encoding='utf-8') as csvfile:
     for row in csv_reader:
         mycursor.execute(sql, row)
 
-
 mydb.commit()
-
 
 mycursor.close()
 mydb.close()
 
 print("CSV data imported successfully!")
+
