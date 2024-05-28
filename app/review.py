@@ -1,60 +1,53 @@
-import tkinter as tk
-from tkinter import ttk
+import customtkinter as ctk
 from tkinter import messagebox
-from database import execute_query, fetch_query
+from database import execute_query
 
-class Review(tk.Frame):
+class Review(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+        super().__init__(parent)
         self.controller = controller
+        self.movie_id = None
+        self.callback = None
         self.create_widgets()
+        
+    def set_params(self, movie_id=None, callback=None):
+        self.movie_id = movie_id
+        self.callback = callback
 
     def create_widgets(self):
-        self.label_movie_id = tk.Label(self, text="Movie ID")
-        self.label_movie_id.pack(pady=5)
+        self.label_title = ctk.CTkLabel(self, text="Add Review", font=("Arial", 24))
+        self.label_title.pack(pady=10)
 
-        self.entry_movie_id = tk.Entry(self)
-        self.entry_movie_id.pack(pady=5)
-
-        self.label_rating = tk.Label(self, text="Rating (1-5)")
+        self.label_rating = ctk.CTkLabel(self, text="Rating (1-5)")
         self.label_rating.pack(pady=5)
+        self.rating_var = ctk.StringVar()
+        self.rating_entry = ctk.CTkEntry(self, textvariable=self.rating_var)
+        self.rating_entry.pack(pady=5)
 
-        self.entry_rating = tk.Entry(self)
-        self.entry_rating.pack(pady=5)
-
-        self.label_comment = tk.Label(self, text="Comment")
+        self.label_comment = ctk.CTkLabel(self, text="Comment")
         self.label_comment.pack(pady=5)
+        self.comment_text = ctk.CTkTextbox(self, height=10)
+        self.comment_text.pack(pady=5)
 
-        self.entry_comment = tk.Entry(self)
-        self.entry_comment.pack(pady=5)
-
-        self.button_submit = tk.Button(self, text="Submit Review", command=self.submit_review)
-        self.button_submit.pack(pady=5)
-
-        self.tree = ttk.Treeview(self, columns=('User', 'Movie', 'Rating', 'Comment'), show='headings')
-        self.tree.heading('User', text='User')
-        self.tree.heading('Movie', text='Movie')
-        self.tree.heading('Rating', text='Rating')
-        self.tree.heading('Comment', text='Comment')
-        self.tree.pack(fill=tk.BOTH, expand=True, pady=5)
-
-        self.load_reviews()
-
-    def load_reviews(self):
-        self.tree.delete(*self.tree.get_children())
-        query = "SELECT * FROM reviews"
-        reviews = fetch_query(query)
-        for review in reviews:
-            self.tree.insert('', 'end', values=(review['user_id'], review['movie_id'], review['rating'], review['comment']))
+        self.submit_button = ctk.CTkButton(self, text="Submit", command=self.submit_review)
+        self.submit_button.pack(pady=20)
 
     def submit_review(self):
-        movie_id = self.entry_movie_id.get()
-        rating = self.entry_rating.get()
-        comment = self.entry_comment.get()
+        rating = self.rating_var.get()
+        comment = self.comment_text.get("1.0", "end-1c")
+        user_id = self.controller.user_id 
+
+        if not rating.isdigit() or not (1 <= int(rating) <= 5):
+            messagebox.showerror("Error", "Rating must be a number between 1 and 5")
+            return
+
         query = "INSERT INTO reviews (user_id, movie_id, rating, comment) VALUES (%s, %s, %s, %s)"
         try:
-            execute_query(query, (self.controller.user_id, movie_id, rating, comment))
+            execute_query(query, (user_id, self.movie_id, rating, comment))
             messagebox.showinfo("Success", "Review submitted successfully")
-            self.load_reviews()
-        except mysql.connector.Error as err:
-            messagebox.showerror("Error", f"Error: {err}")
+            if self.callback:
+                self.callback()
+            self.controller.show_frame("Dashboard")
+        except Exception as e:
+            print(f"Error submitting review: {e}")
+            messagebox.showerror("Error", "Failed to submit review")

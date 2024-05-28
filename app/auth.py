@@ -2,6 +2,7 @@ import customtkinter as ctk
 from tkinter import messagebox
 from database import fetch_query, execute_query
 import mysql.connector
+import hashlib
 
 class Auth(ctk.CTkFrame):
     def __init__(self, parent, controller):
@@ -33,8 +34,9 @@ class Auth(ctk.CTkFrame):
             messagebox.showerror("Error", "All fields are required")
             return
 
+        password_hash = hashlib.sha256(password.encode()).hexdigest()
         query = "SELECT * FROM users WHERE username = %s AND password = %s"
-        user = fetch_query(query, (username, password))
+        user = fetch_query(query, (username, password_hash))
 
         if user:
             self.controller.user_id = user[0]['id']
@@ -93,9 +95,10 @@ class Register(ctk.CTkFrame):
             messagebox.showerror("Error", "Username or Email already exists")
             return
 
+        password_hash = hashlib.sha256(password.encode()).hexdigest()
         query = "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)"
         try:
-            execute_query(query, (username, email, password))
+            execute_query(query, (username, email, password_hash))
             messagebox.showinfo("Success", "User registered successfully")
             self.back_to_login()
         except mysql.connector.Error as err:
@@ -103,4 +106,3 @@ class Register(ctk.CTkFrame):
 
     def back_to_login(self):
         self.controller.show_frame("Auth")
-

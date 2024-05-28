@@ -35,6 +35,7 @@ class Movie(ctk.CTkFrame):
         self.button_back.pack(pady=5)
 
     def load_movie(self, movie_id=None, callback=None):
+        self.clear_fields()
         self.movie_id = movie_id
         self.callback = callback
         if movie_id:
@@ -53,6 +54,7 @@ class Movie(ctk.CTkFrame):
         year = self.entry_year.get()
         genre = self.entry_genre.get()
         description = self.text_description.get("1.0", ctk.END).strip()
+        print(f"Submitting review for movie ID: {self.movie_id}") 
 
         if not title or not director or not year or not genre:
             messagebox.showerror("Error", "All fields except description are required")
@@ -71,6 +73,14 @@ class Movie(ctk.CTkFrame):
             self.controller.show_frame("Dashboard")
         except Exception as err:
             messagebox.showerror("Error", f"Database error: {err}")
+            
+    
+    def clear_fields(self):
+        self.entry_title.delete(0, ctk.END)
+        self.entry_director.delete(0, ctk.END)
+        self.entry_year.delete(0, ctk.END)
+        self.entry_genre.delete(0, ctk.END)
+        self.text_description.delete("1.0", ctk.END)
 
     def back_to_dashboard(self):
         self.controller.show_frame("Dashboard")
