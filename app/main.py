@@ -9,20 +9,22 @@ class MainApplication(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.title("Quip - Movie Review App")
-        self.geometry("800x720")
-        self.resizable(False, False)
-        self.user_id = None
+        ctk.set_default_color_theme("dark-blue")
 
-        self.container = ctk.CTkFrame(self)
-        self.container.pack(fill="both", expand=True)
+        self.title("Movie App")
+        self.geometry("1200x600")
+        self.resizable(False, False)
+        self.configure(bg="#1c1c1c")
+
+        container = ctk.CTkFrame(self, width=1200, height=600, corner_radius=10, fg_color="#ffffff")
+        container.place(relwidth=1, relheight=1)
 
         self.frames = {}
         for F in (Dashboard, Movie, Watchlist, Auth, Register, Review):
             page_name = F.__name__
-            frame = F(parent=self.container, controller=self)
+            frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
-            frame.grid(row=0, column=0, sticky="nsew")
+            frame.place(relwidth=1, relheight=1)
 
         self.show_frame("Auth")
 
