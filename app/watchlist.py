@@ -3,6 +3,8 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from database import execute_query, fetch_query
+from customtkinter import CTkImage
+from PIL import Image
 
 class Watchlist(ctk.CTkFrame):
     def __init__(self, parent, controller):
@@ -13,34 +15,32 @@ class Watchlist(ctk.CTkFrame):
         self.bg_frame = ctk.CTkFrame(self, width=1200, height=600, corner_radius=0, fg_color="#ffffff")
         self.bg_frame.pack(fill="both", expand=True)
         
-        self.label_title = ctk.CTkLabel(self.bg_frame, text="Watchlist", font=("Arial", 24), text_color="#333333")
-        self.label_title.pack(pady=10)
+        self.bg = CTkImage(Image.open(r"C:\Users\diata\OneDrive\Documents\Bagas\Tugas\UNPAD\Semester 2\Sistem Data\Praktikum\UAS_PROJECT\Movie_manager\app\BG5.png"), size=(1200, 600))
+        self.bg_label = ctk.CTkLabel(self.bg_frame, image=self.bg, text="")
+        self.bg_label.place(relheight=1, relwidth=1, relx=0.5, rely=0.5, anchor="center")
 
         # Create and organize the form frame
-        form_frame = ctk.CTkFrame(self.bg_frame, fg_color="#ffffff")
-        form_frame.pack(fill=tk.X, pady=5, padx=10)
+        form_frame = ctk.CTkFrame(self.bg_label, fg_color="#0f1b22", width=500, height=120, bg_color="#0f1b22")
+        form_frame.place(x=10, y=60)
 
-        self.label_name = ctk.CTkLabel(form_frame, text="Watchlist Name", font=("Arial", 14), text_color="#333333")
-        self.label_name.grid(row=0, column=0, padx=5, pady=5, sticky="w")
-
-        self.entry_name = ctk.CTkEntry(form_frame, width=300, height=40, corner_radius=10)
-        self.entry_name.grid(row=0, column=1, padx=5, pady=5, sticky="w")
+        self.entry_name = ctk.CTkEntry(form_frame, width=300, height=40, corner_radius=10, placeholder_text="Create your watchlist here")
+        self.entry_name.place(x=5, y=5)
 
         self.button_create = ctk.CTkButton(form_frame, text="Create Watchlist", width=150, height=40, corner_radius=20, command=self.create_watchlist)
-        self.button_create.grid(row=1, column=0, padx=5, pady=5, sticky="w")
+        self.button_create.place(x=5, y=60)
         
         self.button_delete = ctk.CTkButton(form_frame, text="Delete Watchlist", width=150, height=40, corner_radius=20, command=self.delete_watchlist)
-        self.button_delete.grid(row=1, column=1, padx=5, pady=5, sticky="w")
+        self.button_delete.place(x=160, y=60)
 
         # Divide the space into two sections: the watchlist table and the movies list side by side
-        table_frame = ctk.CTkFrame(self.bg_frame, fg_color="#ffffff", width=1000, height=350)
-        table_frame.pack(fill=ctk.BOTH, expand=True, pady=10)
+        table_frame = ctk.CTkFrame(self.bg_label, fg_color="#0f1b22", width=1000, height=350, bg_color="#0f1b22")
+        table_frame.place(x=10, y=180)
 
-        watchlist_table_frame = ctk.CTkFrame(table_frame, fg_color="#ffffff", width=500)
-        watchlist_table_frame.pack(fill=ctk.BOTH, expand=True, side=ctk.LEFT, padx=10, pady=5)
+        watchlist_table_frame = ctk.CTkFrame(table_frame, fg_color="#0f1b22", width=500, height=288, bg_color="#0f1b22")
+        watchlist_table_frame.place(x=10, y=10)
 
-        movie_list_frame = ctk.CTkFrame(table_frame, fg_color="#ffffff", width=500)
-        movie_list_frame.pack(fill=ctk.BOTH, expand=True, side=ctk.RIGHT, padx=10, pady=5)
+        movie_list_frame = ctk.CTkFrame(table_frame, fg_color="#0f1b22", width=500, height=288, bg_color="#0f1b22")
+        movie_list_frame.place(x=510, y=10)
 
         # Treeview for watchlists
         style = ttk.Style()
@@ -61,28 +61,25 @@ class Watchlist(ctk.CTkFrame):
 
         self.tree = ttk.Treeview(watchlist_table_frame, columns=('Name'), show='headings', style="Treeview")
         self.tree.heading('Name', text='Name')
-        self.tree.pack(fill=ctk.BOTH, expand=True)
+        self.tree.place(relwidth=1, relheight=1)
         self.tree.bind('<<TreeviewSelect>>', self.load_watchlist_movies)
 
         # Listbox for movies in selected watchlist
         self.movies_listbox = tk.Listbox(movie_list_frame, height=10, font=('Arial', 12))
-        self.movies_listbox.pack(fill=tk.BOTH, expand=True, padx=10, pady=5)
+        self.movies_listbox.place(relwidth=1, relheight=1)
 
         # Movie ID and add movie frame
-        movie_frame = ctk.CTkFrame(self.bg_frame, fg_color="#ffffff")
-        movie_frame.pack(fill=tk.X, pady=5, padx=10)
+        movie_frame = ctk.CTkFrame(self.bg_frame, fg_color="#0f1b22", width=500, height=100, bg_color="#0f1b22")
+        movie_frame.place(x=10, y=500)
 
-        self.label_movie = ctk.CTkLabel(movie_frame, text="Movie ID to Add", font=("Arial", 14), text_color="#333333")
-        self.label_movie.grid(row=0, column=0, padx=5, pady=5, sticky="w")
+        self.entry_movie_id = ctk.CTkEntry(movie_frame, width=300, height=32, corner_radius=10, placeholder_text="Movie ID to Add")
+        self.entry_movie_id.place(x=5, y=5)
 
-        self.entry_movie_id = ctk.CTkEntry(movie_frame, width=300, height=40, corner_radius=10)
-        self.entry_movie_id.grid(row=0, column=1, padx=5, pady=5, sticky="w")
+        self.button_add_movie = ctk.CTkButton(movie_frame, text="Add Movie to Watchlist", width=150, height=32, corner_radius=20, command=self.add_movie_to_watchlist)
+        self.button_add_movie.place(x=5, y=60)
 
-        self.button_add_movie = ctk.CTkButton(movie_frame, text="Add Movie to Watchlist", width=200, height=40, corner_radius=20, command=self.add_movie_to_watchlist)
-        self.button_add_movie.grid(row=1, column=0, padx=5, pady=5, sticky="w")
-
-        self.button_back = ctk.CTkButton(movie_frame, text="Back to Dashboard", width=200, height=40, corner_radius=20, command=self.back_to_dashboard)
-        self.button_back.grid(row=1, column=1, padx=5, pady=5, sticky="w")
+        self.button_back = ctk.CTkButton(movie_frame, text="Back to Dashboard", width=150, height=32, corner_radius=20, command=self.back_to_dashboard)
+        self.button_back.place(x=220, y=60)
 
     def load_watchlists(self):
         self.tree.delete(*self.tree.get_children())

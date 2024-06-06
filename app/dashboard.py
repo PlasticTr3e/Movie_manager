@@ -1,19 +1,22 @@
 import customtkinter as ctk
 from tkinter import ttk, messagebox
 from database import fetch_query, execute_query
+from customtkinter import CTkImage
+from PIL import Image
 
 class Dashboard(ctk.CTkFrame):
     def __init__(self, parent, controller):
         super().__init__(parent)
         self.controller = controller
         
-        self.bg_frame = ctk.CTkFrame(self, fg_color="#ffffff")
+        self.bg_frame = ctk.CTkFrame(self)
         self.bg_frame.place(relwidth=1, relheight=1)
+        
+        self.bg = CTkImage(Image.open(r"C:\Users\diata\OneDrive\Documents\Bagas\Tugas\UNPAD\Semester 2\Sistem Data\Praktikum\UAS_PROJECT\Movie_manager\app\BG5.png"), size=(1200, 600))
+        self.bg_label = ctk.CTkLabel(self.bg_frame, image=self.bg, text="")
+        self.bg_label.place(relheight = 1, relwidth=1, relx=0.5, rely=0.5, anchor="center")
 
-        self.label_title = ctk.CTkLabel(self.bg_frame, text="Dashboard", font=("Arial", 24), text_color="#333333")
-        self.label_title.place(relx=0.5, rely=0.05, anchor="center")
-
-        button_frame = ctk.CTkFrame(self.bg_frame, fg_color="#ffffff")
+        button_frame = ctk.CTkFrame(self.bg_label, fg_color="#0f1b22")
         button_frame.place(relx=0.5, rely=0.15, anchor="center")
 
         self.button_add_to_watchlist = ctk.CTkButton(button_frame, text="Watchlist", command=self.add_to_watchlist, width=100, height=40, corner_radius=10)
@@ -28,7 +31,7 @@ class Dashboard(ctk.CTkFrame):
         self.button_review_movie.pack(side=ctk.LEFT, padx=5, pady=5)
         self.button_delete_review.pack(side=ctk.LEFT, padx=5, pady=5)
 
-        search_frame = ctk.CTkFrame(self.bg_frame, fg_color="#ffffff")
+        search_frame = ctk.CTkFrame(self.bg_label, fg_color="#0f1b22")
         search_frame.place(relx=0.5, rely=0.25, anchor="center")
 
         self.search_var = ctk.StringVar()
@@ -37,7 +40,7 @@ class Dashboard(ctk.CTkFrame):
         self.search_button = ctk.CTkButton(search_frame, text="Search", command=self.search_movies, width=100, height=40, corner_radius=10)
         self.search_button.pack(side=ctk.LEFT, padx=5)
 
-        table_frame = ctk.CTkFrame(self.bg_frame, corner_radius=20, fg_color="#f0f0f0")
+        table_frame = ctk.CTkFrame(self.bg_label, corner_radius=20, fg_color="#ffffff", bg_color="#0f1b22")
         table_frame.place(relwidth = 0.84, relheight=0.6,relx=0.5, rely=0.65, anchor="center")
 
         style = ttk.Style()
