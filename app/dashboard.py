@@ -2,6 +2,7 @@ import customtkinter as ctk
 from tkinter import ttk, messagebox
 from database import fetch_query, execute_query
 from customtkinter import CTkImage
+from auth import Auth
 from PIL import Image
 
 class Dashboard(ctk.CTkFrame):
@@ -12,7 +13,7 @@ class Dashboard(ctk.CTkFrame):
         self.bg_frame = ctk.CTkFrame(self)
         self.bg_frame.place(relwidth=1, relheight=1)
         
-        self.bg = CTkImage(Image.open(r"C:\Users\diata\OneDrive\Documents\Bagas\Tugas\UNPAD\Semester 2\Sistem Data\Praktikum\UAS_PROJECT\Movie_manager\app\BG5.png"), size=(1200, 600))
+        self.bg = CTkImage(Image.open(r"BG5.png"), size=(1200, 600))
         self.bg_label = ctk.CTkLabel(self.bg_frame, image=self.bg, text="")
         self.bg_label.place(relheight = 1, relwidth=1, relx=0.5, rely=0.5, anchor="center")
 
@@ -24,12 +25,14 @@ class Dashboard(ctk.CTkFrame):
         self.button_delete_movie = ctk.CTkButton(button_frame, text="Delete Movie", command=self.delete_movie, width=100, height=40, corner_radius=10)
         self.button_review_movie = ctk.CTkButton(button_frame, text="Add Review", command=self.add_review, width=100, height=40, corner_radius=10)
         self.button_delete_review = ctk.CTkButton(button_frame, text="Delete Review", command=self.delete_review, width=100, height=40, corner_radius=10)
+        self.button_logout = ctk.CTkButton(button_frame, text="Logout", command=self.logout, width=100, height=40, corner_radius=10)
 
         self.button_add_to_watchlist.pack(side=ctk.LEFT, padx=5, pady=5)
         self.button_add_movie.pack(side=ctk.LEFT, padx=5, pady=5)
         self.button_delete_movie.pack(side=ctk.LEFT, padx=5, pady=5)
         self.button_review_movie.pack(side=ctk.LEFT, padx=5, pady=5)
         self.button_delete_review.pack(side=ctk.LEFT, padx=5, pady=5)
+        self.button_logout.pack(side=ctk.RIGHT, padx=5, pady=5)
 
         search_frame = ctk.CTkFrame(self.bg_label, fg_color="#0f1b22")
         search_frame.place(relx=0.5, rely=0.25, anchor="center")
@@ -196,3 +199,7 @@ class Dashboard(ctk.CTkFrame):
 
     def on_double_click(self, event):
         self.edit_movie()
+        
+    def logout(self):
+        self.controller.show_frame("Auth")
+        

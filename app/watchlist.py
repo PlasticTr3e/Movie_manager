@@ -1,7 +1,6 @@
 import customtkinter as ctk
 import tkinter as tk
-from tkinter import ttk
-from tkinter import messagebox
+from tkinter import ttk, messagebox
 from database import execute_query, fetch_query
 from customtkinter import CTkImage
 from PIL import Image
@@ -15,7 +14,7 @@ class Watchlist(ctk.CTkFrame):
         self.bg_frame = ctk.CTkFrame(self, width=1200, height=600, corner_radius=0, fg_color="#ffffff")
         self.bg_frame.pack(fill="both", expand=True)
         
-        self.bg = CTkImage(Image.open(r"C:\Users\diata\OneDrive\Documents\Bagas\Tugas\UNPAD\Semester 2\Sistem Data\Praktikum\UAS_PROJECT\Movie_manager\app\BG5.png"), size=(1200, 600))
+        self.bg = CTkImage(Image.open(r"BG5.png"), size=(1200, 600))
         self.bg_label = ctk.CTkLabel(self.bg_frame, image=self.bg, text="")
         self.bg_label.place(relheight=1, relwidth=1, relx=0.5, rely=0.5, anchor="center")
 

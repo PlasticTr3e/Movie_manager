@@ -7,7 +7,7 @@ myuser = "root"
 mypassword = "mysql"
 mydatabase = "movie_manager"
 
-csv_file = "movie_data_scrape/modified_films_data.csv"
+csv_file = r"Movie_manager/DataScrapeMovies/modified_films_data.csv"
 
 mydb = mysql.connector.connect(
     host=myhost, user=myuser, password=mypassword, database=mydatabase
@@ -28,5 +28,5 @@ mydb.commit()
 mycursor.close()
 mydb.close()
 
-print("CSV data imported successfully!")
+print("Done a")
 

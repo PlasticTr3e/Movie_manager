@@ -15,7 +15,7 @@ class Auth(ctk.CTkFrame):
         self.bg_frame = ctk.CTkFrame(self, width=1200, height=600, corner_radius=0, fg_color="#ffffff")
         self.bg_frame.pack(fill="both", expand=True)
         
-        self.bg = CTkImage(Image.open(r"C:\Users\diata\OneDrive\Documents\Bagas\Tugas\UNPAD\Semester 2\Sistem Data\Praktikum\UAS_PROJECT\Movie_manager\app\BG.png"), size=(1200, 600))
+        self.bg = CTkImage(Image.open(r"BG.png"), size=(1200, 600))
         self.bg_label = ctk.CTkLabel(self.bg_frame, image=self.bg)
         self.bg_label.place(relheight = 1, relwidth=1, relx=0.5, rely=0.5, anchor="center")
         
@@ -53,7 +53,7 @@ class Auth(ctk.CTkFrame):
             self.controller.user_id = user[0]['id']
             self.controller.show_frame("Dashboard")
         else:
-            messagebox.showerror("Error", "Invalid username or password")
+            messagebox.showerror("Error", "Invalid username atau password")
 
     def show_register(self):
         self.controller.show_frame("Register")
@@ -66,7 +66,7 @@ class Register(ctk.CTkFrame):
         self.bg_frame = ctk.CTkFrame(self, width=1200, height=700, corner_radius=0, fg_color="#ffffff")
         self.bg_frame.pack(fill="both", expand=True)
         
-        self.bg = CTkImage(Image.open(r"C:\Users\diata\OneDrive\Documents\Bagas\Tugas\UNPAD\Semester 2\Sistem Data\Praktikum\UAS_PROJECT\Movie_manager\app\BG2.png"), size=(1200, 600))
+        self.bg = CTkImage(Image.open(r"BG2.png"), size=(1200, 600))
         self.bg_label = ctk.CTkLabel(self.bg_frame, image=self.bg,text="")
         self.bg_label.place(relheight = 1, relwidth=1, relx=0.5, rely=0.5, anchor="center")
 
