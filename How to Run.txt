@@ -1,0 +1,4 @@
+1. Buat database dengan struktur yang sama dengan file
+2. Pastikan dalam file database.py user dan passwornya disesuaikan dengan user dan password yang dimiliki
+3. Jalankan "pip install -r requirements.txt" untuk menginstall semua library yang dibutuhkan
+4. Jalankan "py main.py" untuk menjalankan program
