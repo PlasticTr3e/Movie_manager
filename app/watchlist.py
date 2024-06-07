@@ -50,11 +50,11 @@ class Watchlist(ctk.CTkFrame):
                         foreground="black",
                         rowheight=25,
                         fieldbackground="#f9f9f9",
-                        font=('Arial', 12))
+                        font=('Helvetica', 12))
         style.configure("Treeview.Heading", 
                         background="#f1f1f1",
                         foreground="black",
-                        font=('Arial', 12, 'bold'))
+                        font=('Helvetica', 12, 'bold'))
         style.map('Treeview', 
                   background=[('selected', '#e1e1e1')], 
                   foreground=[('selected', 'black')])
@@ -65,7 +65,7 @@ class Watchlist(ctk.CTkFrame):
         self.tree.bind('<<TreeviewSelect>>', self.load_watchlist_movies)
 
         # Listbox for movies in selected watchlist
-        self.movies_listbox = tk.Listbox(movie_list_frame, height=10, font=('Arial', 12))
+        self.movies_listbox = tk.Listbox(movie_list_frame, height=10, font=('Helvetica', 12))
         self.movies_listbox.place(relwidth=1, relheight=1)
 
         # Movie ID and add movie frame

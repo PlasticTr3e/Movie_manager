@@ -50,11 +50,11 @@ class Dashboard(ctk.CTkFrame):
                         foreground="black",
                         rowheight=28,
                         fieldbackground="#f9f9f9",
-                        font=('Arial', 8))
+                        font=('Helvetica', 8))
         style.configure("Treeview.Heading", 
                         background="#f1f1f1",
                         foreground="black",
-                        font=('Arial', 8, 'bold'))
+                        font=('Helvetica', 8, 'bold'))
         style.map('Treeview', 
                   background=[('selected', '#FF8000')], 
                   foreground=[('selected', 'black')])

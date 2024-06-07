@@ -30,7 +30,7 @@ class Movie(ctk.CTkFrame):
         self.entry_genre = ctk.CTkEntry(self.bg_label, width=300, height=40, corner_radius=20, placeholder_text="Genre",bg_color="#836969")
         self.entry_genre.place(relx=0.2, rely=0.6, anchor="center")
 
-        self.label_description = ctk.CTkLabel(self.bg_label, text="Description", font=("Arial", 24), text_color="#333333",bg_color="#796a6b")
+        self.label_description = ctk.CTkLabel(self.bg_label, text="Description", font=("Helvetica", 24), text_color="#333333",bg_color="#796a6b")
         self.label_description.place(relx=0.56, rely=0.26, anchor="center")
         
         self.text_description = ctk.CTkTextbox(self.bg_label, width=400, height=250, corner_radius=20,bg_color="#836969")

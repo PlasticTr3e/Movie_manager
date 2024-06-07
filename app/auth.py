@@ -22,10 +22,10 @@ class Auth(ctk.CTkFrame):
         login_form_frame = ctk.CTkFrame(self.bg_label, fg_color="#f0f0f0", bg_color="#22333e", corner_radius=20)
         login_form_frame.place(relheight = 0.6, relwidth= 0.38, relx=0.5, rely=0.6, anchor="center")
 
-        self.welcome_label = ctk.CTkLabel(login_form_frame, text="Welcome", font=("Arial", 24), text_color="#333333", bg_color="transparent")
+        self.welcome_label = ctk.CTkLabel(login_form_frame, text="Welcome", font=("Helvetica", 24), text_color="#333333", bg_color="transparent")
         self.welcome_label.place(relx=0.5, rely=0.15, anchor="center")
 
-        self.sub_welcome_button = ctk.CTkButton(login_form_frame, text="Don't have an account?", text_color="#333333", font=("Arial", 12), fg_color="#f0f0f0", command=self.show_register)
+        self.sub_welcome_button = ctk.CTkButton(login_form_frame, text="Don't have an account?", text_color="#333333", font=("Helvetica", 12), fg_color="#f0f0f0", command=self.show_register)
         self.sub_welcome_button.place(relx=0.5, rely=0.23, anchor="center")
 
         self.entry_username = ctk.CTkEntry(login_form_frame, width=260, height=40, corner_radius=10, placeholder_text="Username")
