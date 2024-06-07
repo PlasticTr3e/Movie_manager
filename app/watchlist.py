@@ -31,16 +31,15 @@ class Watchlist(ctk.CTkFrame):
         self.button_delete = ctk.CTkButton(form_frame, text="Delete Watchlist", width=150, height=40, corner_radius=20, command=self.delete_watchlist)
         self.button_delete.place(x=160, y=60)
 
+        #Frame untuk Wachlist dan list movies dalam wachlist
         table_frame = ctk.CTkFrame(self.bg_label, fg_color="#0f1b22", width=1000, height=350, bg_color="#0f1b22")
         table_frame.place(x=10, y=180)
-
         watchlist_table_frame = ctk.CTkFrame(table_frame, fg_color="#0f1b22", width=500, height=288, bg_color="#0f1b22")
         watchlist_table_frame.place(x=10, y=10)
-
         movie_list_frame = ctk.CTkFrame(table_frame, fg_color="#0f1b22", width=500, height=288, bg_color="#0f1b22")
         movie_list_frame.place(x=510, y=10)
 
-
+        #Table Style 
         style = ttk.Style()
         style.theme_use("clam")
         style.configure("Treeview", 
@@ -57,23 +56,22 @@ class Watchlist(ctk.CTkFrame):
                   background=[('selected', '#e1e1e1')], 
                   foreground=[('selected', 'black')])
 
+        #Watchlist Table
         self.tree = ttk.Treeview(watchlist_table_frame, columns=('Name'), show='headings', style="Treeview")
         self.tree.heading('Name', text='Name')
         self.tree.place(relwidth=1, relheight=1)
         self.tree.bind('<<TreeviewSelect>>', self.load_watchlist_movies)
-
+        
         self.movies_listbox = tk.Listbox(movie_list_frame, height=10, font=('Helvetica', 12))
         self.movies_listbox.place(relwidth=1, relheight=1)
 
+        #Entry Movie ID, dan Back to Dashboard Button
         movie_frame = ctk.CTkFrame(self.bg_frame, fg_color="#0f1b22", width=500, height=100, bg_color="#0f1b22")
         movie_frame.place(x=10, y=500)
-
         self.entry_movie_id = ctk.CTkEntry(movie_frame, width=300, height=32, corner_radius=10, placeholder_text="Movie ID to Add")
         self.entry_movie_id.place(x=5, y=5)
-
         self.button_add_movie = ctk.CTkButton(movie_frame, text="Add Movie to Watchlist", width=150, height=32, corner_radius=20, command=self.add_movie_to_watchlist)
         self.button_add_movie.place(x=5, y=60)
-
         self.button_back = ctk.CTkButton(movie_frame, text="Back to Dashboard", width=150, height=32, corner_radius=20, command=self.back_to_dashboard)
         self.button_back.place(x=220, y=60)
 

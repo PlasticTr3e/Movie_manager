@@ -44,7 +44,7 @@ class Dashboard(ctk.CTkFrame):
         table_frame.place(relwidth = 0.84, relheight=0.6,relx=0.5, rely=0.65, anchor="center")
 
         style = ttk.Style()
-        style.theme_use("clam")  # Use clam theme for better customization
+        style.theme_use("clam")  
         style.configure("Treeview", 
                         background="#ffffff",
                         foreground="black",
@@ -59,7 +59,7 @@ class Dashboard(ctk.CTkFrame):
                   background=[('selected', '#FF8000')], 
                   foreground=[('selected', 'black')])
 
-        # Movie Table
+
         self.movie_tree = ttk.Treeview(table_frame, columns=('Title', 'Director', 'Year', 'Genre'), show='headings', style="Treeview")
         self.movie_tree.heading('Title', text='Title')
         self.movie_tree.heading('Director', text='Director')
@@ -73,13 +73,12 @@ class Dashboard(ctk.CTkFrame):
         self.movie_tree.bind('<<TreeviewSelect>>', self.load_reviews)
         self.movie_tree.pack(fill="both", expand=True, side=ctk.LEFT, padx=20,pady=20)
 
-        # Striped row effect
         self.movie_tree.tag_configure('oddrow', background='#f9f9f9')
         self.movie_tree.tag_configure('evenrow', background='#f0f0f0')
 
         self.load_movies()
 
-        # Review Table
+  
         self.review_tree = ttk.Treeview(table_frame, columns=('User', 'Rating', 'Comment'), show='headings', style="Treeview")
         self.review_tree.heading('User', text='User')
         self.review_tree.heading('Rating', text='★')
@@ -92,7 +91,6 @@ class Dashboard(ctk.CTkFrame):
         self.review_tree.tag_configure('oddrow', background='#f9f9f9')
         self.review_tree.tag_configure('evenrow', background='#f0f0f0')
 
-        self.load_reviews_table()
         
     def load_movies(self):
         self.movie_tree.delete(*self.movie_tree.get_children())
@@ -102,14 +100,11 @@ class Dashboard(ctk.CTkFrame):
             tag = 'oddrow' if index % 2 == 0 else 'evenrow'
             self.movie_tree.insert('', 'end', values=(movie['title'], movie['director'], movie['release_year'], movie['genre']), tags=(tag,))
 
-    def load_reviews(self, event):
+    def load_reviews(self, event, movie_title=None):
+        self.review_tree.delete(*self.review_tree.get_children())
         selected_item = self.movie_tree.selection()
         if selected_item:
             movie_title = self.movie_tree.item(selected_item, 'values')[0]
-            self.load_reviews_table(movie_title)
-
-    def load_reviews_table(self, movie_title=None):
-        self.review_tree.delete(*self.review_tree.get_children())
         if movie_title:
             query = """
                 SELECT u.username, r.rating, r.comment

@@ -70,27 +70,21 @@ class Register(ctk.CTkFrame):
         self.bg_label = ctk.CTkLabel(self.bg_frame, image=self.bg,text="")
         self.bg_label.place(relheight = 1, relwidth=1, relx=0.5, rely=0.5, anchor="center")
 
-        # Username Entry
         self.entry_username = ctk.CTkEntry(self.bg_frame, width=300, height=40,  placeholder_text="Username", bg_color="#4d4842")
         self.entry_username.place(relx=0.5, rely=0.24, anchor="center")
 
-        # Email Entry
         self.entry_email = ctk.CTkEntry(self.bg_frame, width=300, height=40,  placeholder_text="Email", bg_color="#484240")
         self.entry_email.place(relx=0.5, rely=0.34, anchor="center")
 
-        # Password Entry
         self.entry_password = ctk.CTkEntry(self.bg_frame, width=300, height=40,  placeholder_text="Password", show="*", bg_color="#9d7f63")
         self.entry_password.place(relx=0.5, rely=0.44, anchor="center")
 
-        # Confirm Password Entry
         self.entry_confirm_password = ctk.CTkEntry(self.bg_frame, width=300, height=40,  placeholder_text="Confirm Password", show="*", bg_color="#9a7151")
         self.entry_confirm_password.place(relx=0.5, rely=0.54, anchor="center")
 
-        # Register Button
         self.button_register = ctk.CTkButton(self.bg_frame, text="Register", width=200, height=40,  command=self.register, bg_color="#a3824d")
         self.button_register.place(relx=0.5, rely=0.68, anchor="center")
 
-        # Back to Login Button
         self.button_back = ctk.CTkButton(self.bg_frame, text="Back to Login", width=200, height=40,  command=self.back_to_login, bg_color="#ad8c4d")
         self.button_back.place(relx=0.5, rely=0.78, anchor="center")
 

@@ -11,10 +11,6 @@ class Review(ctk.CTkFrame):
         
         self.bg_frame = ctk.CTkFrame(self, width=1200, height=600, corner_radius=0, fg_color="#ffffff")
         self.bg_frame.pack(fill="both", expand=True)
-        
-    def set_params(self, movie_id=None, callback=None):
-        self.movie_id = movie_id
-        self.callback = callback
 
         self.label_title = ctk.CTkLabel(self.bg_frame, text="Add Review", font=("Arial", 24), text_color="#333333")
         self.label_title.pack(pady=20)
@@ -35,6 +31,10 @@ class Review(ctk.CTkFrame):
         
         self.submit_button = ctk.CTkButton(self.bg_frame, text="Back", width=200, height=40, corner_radius=20, command=self.back_to_dashboard)
         self.submit_button.pack(pady=20)
+        
+    def set_params(self, movie_id=None, callback=None):
+        self.movie_id = movie_id
+        self.callback = callback
 
     def submit_review(self):
         rating = self.rating_var.get()
