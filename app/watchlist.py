@@ -19,7 +19,6 @@ class Watchlist(ctk.CTkFrame):
         self.bg_label = ctk.CTkLabel(self.bg_frame, image=self.bg, text="")
         self.bg_label.place(relheight=1, relwidth=1, relx=0.5, rely=0.5, anchor="center")
 
-        # Create and organize the form frame
         form_frame = ctk.CTkFrame(self.bg_label, fg_color="#0f1b22", width=500, height=120, bg_color="#0f1b22")
         form_frame.place(x=10, y=60)
 
@@ -32,7 +31,6 @@ class Watchlist(ctk.CTkFrame):
         self.button_delete = ctk.CTkButton(form_frame, text="Delete Watchlist", width=150, height=40, corner_radius=20, command=self.delete_watchlist)
         self.button_delete.place(x=160, y=60)
 
-        # Divide the space into two sections: the watchlist table and the movies list side by side
         table_frame = ctk.CTkFrame(self.bg_label, fg_color="#0f1b22", width=1000, height=350, bg_color="#0f1b22")
         table_frame.place(x=10, y=180)
 
@@ -42,7 +40,7 @@ class Watchlist(ctk.CTkFrame):
         movie_list_frame = ctk.CTkFrame(table_frame, fg_color="#0f1b22", width=500, height=288, bg_color="#0f1b22")
         movie_list_frame.place(x=510, y=10)
 
-        # Treeview for watchlists
+
         style = ttk.Style()
         style.theme_use("clam")
         style.configure("Treeview", 
@@ -64,11 +62,9 @@ class Watchlist(ctk.CTkFrame):
         self.tree.place(relwidth=1, relheight=1)
         self.tree.bind('<<TreeviewSelect>>', self.load_watchlist_movies)
 
-        # Listbox for movies in selected watchlist
         self.movies_listbox = tk.Listbox(movie_list_frame, height=10, font=('Helvetica', 12))
         self.movies_listbox.place(relwidth=1, relheight=1)
 
-        # Movie ID and add movie frame
         movie_frame = ctk.CTkFrame(self.bg_frame, fg_color="#0f1b22", width=500, height=100, bg_color="#0f1b22")
         movie_frame.place(x=10, y=500)
 
