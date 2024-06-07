@@ -30,11 +30,11 @@ class MainApplication(ctk.CTk):
 
     def show_frame(self, page_name, **kwargs):
         frame = self.frames[page_name]
-        if page_name == "Movie":
+        if page_name == "Movie": #Memastikan class Movie mendaptkan movie_id
             movie_id = kwargs.get("movie_id", None)
             callback = kwargs.get("callback", None)
             frame.load_movie(movie_id=movie_id, callback=callback)
-        elif page_name == "Review":
+        elif page_name == "Review": #Memastikan class Review mendaptkan movie_id
             movie_id = kwargs.get("movie_id", None)
             callback = kwargs.get("callback", None)
             frame.set_params(movie_id=movie_id, callback=callback)
